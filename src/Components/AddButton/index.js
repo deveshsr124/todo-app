@@ -19,6 +19,7 @@ const AddButton = (props) => {
 	const [title, setTitle] = useState("");
 	const handleTitleChange = (e) => {
 		setTitle(e.target.value);
+		setTitleErr(false);
 	};
 
 	if (openform === true) {
