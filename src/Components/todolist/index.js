@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, Fragment } from "react";
 import TodoCard from "../Card/card";
 import Typography from "@mui/material/Typography";
 import AddButton from "../AddButton";
 import { Droppable } from "react-beautiful-dnd";
+import CardAdd from "../Card/CardAdd";
 
 const TodoList = ({ title, card, id }) => {
+	const [openform, setOpenForm] = useState(false);
+
 	return (
 		<div>
 			<Droppable droppableId={String(id)}>
@@ -14,7 +17,7 @@ const TodoList = ({ title, card, id }) => {
 							{...provided.droppableProps}
 							ref={provided.innerRef}
 							style={{
-								width: "320px",
+								width: "330px",
 								background: "#ffcc80",
 								padding: "5px",
 								marginRight: "8px",
@@ -24,18 +27,26 @@ const TodoList = ({ title, card, id }) => {
 							<Typography textAlign="center" fontWeight="600">
 								{title}
 							</Typography>
-							{card.map((item, index) => {
-								return (
-									<TodoCard
-										title={item.title}
-										key={item.id}
-										id={item.id}
-										index={index}
-									/>
-								);
-							})}
+							<Fragment>
+								{card.map((item, index) => {
+									return (
+										<TodoCard
+											title={item.title}
+											key={item.id}
+											id={item.id}
+											index={index}
+											listId={id}
+											setOpenForm={setOpenForm}
+										/>
+									);
+								})}
+							</Fragment>
 							{provided.placeholder}
-							<AddButton list={true} id={id} />
+							{openform === true ? (
+								<CardAdd setOpenForm={setOpenForm} listId={id} />
+							) : (
+								<AddButton id={id} setOpenForm={setOpenForm} />
+							)}
 						</div>
 					);
 				}}

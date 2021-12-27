@@ -1,12 +1,11 @@
 import React from "react";
 import TodoList from "./todolist";
-import { connect, useDispatch } from "react-redux";
-import { Box } from "@mui/material";
+import { connect } from "react-redux";
+import { Box, Typography } from "@mui/material";
 import { DragDropContext } from "react-beautiful-dnd";
 import { dragCard } from "../actions";
 
 const Home = (props) => {
-	const dispatch = useDispatch();
 	const handleDragEnd = (result) => {
 		//todo reordering  logic
 		const { destination, source, draggableId } = result;
@@ -32,6 +31,14 @@ const Home = (props) => {
 	return (
 		<div>
 			<DragDropContext onDragEnd={handleDragEnd}>
+				<Typography
+					fontSize="25px"
+					textAlign="center"
+					mt="5%"
+					fontWeight="bold"
+				>
+					Todo App
+				</Typography>
 				<div
 					style={{
 						display: "flex",
@@ -59,6 +66,6 @@ const Home = (props) => {
 	);
 };
 const mapStateToProps = (state) => {
-	return { lists: state.lists };
+	return { lists: state.lists.todo };
 };
 export default connect(mapStateToProps, { dragCard })(Home);
